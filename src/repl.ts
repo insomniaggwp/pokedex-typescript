@@ -30,6 +30,10 @@ export function startREPL(state: State) {
         await state.commands.catch.callback(state, args);
         break;
 
+      case "inspect":
+        await state.commands.inspect.callback(state, args);
+        break;
+
       case "help":
         await state.commands.help.callback(state);
         break;
