@@ -1,4 +1,4 @@
-export async function commandHelp() {
+export async function commandHelp(): Promise<void> {
   console.log("Welcome to the Pokedex!");
   console.log("Usage:");
   console.log("");

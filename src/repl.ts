@@ -11,6 +11,7 @@ export function startREPL(state: State) {
   state.readline.on("line", async (line) => {
     const tokens = cleanInput(line);
     const command = tokens[0]?.toLowerCase();
+    const args = tokens[1]?.toLowerCase();
 
     switch (command) {
       case "map":
@@ -19,6 +20,10 @@ export function startREPL(state: State) {
 
       case "mapb":
         await state.commands.mapb.callback(state);
+        break;
+
+      case "explore":
+        await state.commands.explore.callback(state, args);
         break;
 
       case "help":
