@@ -34,6 +34,10 @@ export function startREPL(state: State) {
         await state.commands.inspect.callback(state, args);
         break;
 
+      case "pokedex":
+        await state.commands.pokedex.callback(state);
+        break;
+
       case "help":
         await state.commands.help.callback(state);
         break;
