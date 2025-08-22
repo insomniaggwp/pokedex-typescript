@@ -62,7 +62,36 @@ export class PokeAPI {
         throw new Error("Unknown error occurred");
       }
     }
+  }
 
+  async fetchPokemon(pokemonName: string): Promise<Pokemon> {
+    try {
+      const url = PokeAPI.baseURL + '/pokemon/' + pokemonName;
+      const pc = this.#pokeCache.get<Pokemon>(url);
+
+      if (pc) {
+        return pc;
+      }
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const resJson: Pokemon = await response.json();
+      this.#pokeCache.add(url, resJson);
+      return resJson;
+
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Failed to fetch location:", error.message);
+        throw error;
+      } else {
+        console.error("Unknown error while fetching location:", error);
+        throw new Error("Unknown error occurred");
+      }
+    }
   }
 }
 
@@ -84,3 +113,8 @@ export type Location = {
     },
   }[];
 };
+
+export type Pokemon = {
+  base_experience: number;
+  name: string;
+}
